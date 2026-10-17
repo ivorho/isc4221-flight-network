@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>U.S. Flight Network Explorer</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <h1>U.S. Flight Network Explorer</h1>
+  <p>ISC 4221C · Lab 7B · OpenFlights routes, 2014 snapshot</p>
+</header>
+
+<main class="layout">
+ <div class="main-row">
+  <section class="panel panel-map" aria-labelledby="hA">
+    <h2 id="hA"><span class="badge">A</span> Network map</h2>
+    <p class="hint">Scroll to zoom, drag to pan. Click an airport to select it.</p>
+    <div id="map" role="region" aria-label="Map of U.S. airports and routes"></div>
+  </section>
+
+  <div class="side">
+    <section class="panel" aria-labelledby="hB">
+      <h2 id="hB"><span class="badge">B</span> Airport lookup</h2>
+      <form id="lookupForm" class="row">
+        <label for="lookupInput" class="sr">IATA code</label>
+        <input id="lookupInput" type="text" maxlength="3" placeholder="TLH" autocomplete="off" spellcheck="false">
+        <button type="submit">Search</button>
+      </form>
+      <div id="lookupResult" class="result"><p class="muted">Type a three-letter code (upper or lower case) and press Enter.</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="hC">
+      <h2 id="hC"><span class="badge">C</span> Network summary</h2>
+      <div class="stats">
+        <div class="stat"><b id="sAirports">–</b><span>Airports</span></div>
+        <div class="stat"><b id="sEdges">–</b><span>Routes (edges)</span></div>
+        <div class="stat"><b id="sComps">–</b><span>Components</span></div>
+      </div>
+      <h3>Connected components</h3>
+      <ul id="compList" class="comps"></ul>
+      <h3>10 largest hubs (degree)</h3>
+      <div id="hubChart" class="bars"></div>
+    </section>
+
+    <section class="panel" aria-labelledby="hD">
+      <h2 id="hD"><span class="badge">D</span> Connection checker</h2>
+      <div class="checker">
+        <label for="fromSel" class="sr">From</label>
+        <select id="fromSel"></select>
+        <label for="toSel" class="sr">To</label>
+        <select id="toSel"></select>
+        <button id="checkBtn" type="button">Check</button>
+      </div>
+      <div id="checkResult" class="result"><p class="muted">Choose two airports and press Check.</p></div>
+    </section>
+  </div>
+ </div>
+
+  <section class="panel panel-about" aria-labelledby="hE">
+    <h2 id="hE"><span class="badge">E</span> About the data</h2>
+    <p>The map shows the U.S. domestic air network as a graph. Each dot is a U.S. airport with at least one scheduled domestic route,
+      placed at its real latitude and longitude and sized and colored by its <b>degree</b> (the number of airports it connects to directly).
+      Each line is an <b>edge</b>: at least one airline flies directly between the two airports, in either direction.
+      Routes to or from other countries are left out, and many airlines on the same pair count as one edge.
+      The lookup (B) finds an airport with binary search on the sorted list of codes; the connection checker (D) runs the connection
+      algorithm in your browser each time you press Check.</p>
+    <p><b>Source:</b> <a href="https://openflights.org/data.php" target="_blank" rel="noopener">OpenFlights</a>
+      (<code>airports.dat</code> and <code>routes.dat</code>), available under the
+      <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener">Open Database License (ODbL)</a>.
+      The routes are a <b>2014 snapshot</b>: some routes no longer exist and newer ones are missing.</p>
+    <p><b>Code and report:</b>
+      <a href="https://github.com/FSU-4221C/fsu-4221c-26-lab-7b-flight-network-ivorho" target="_blank" rel="noopener">course repository</a> ·
+      <a href="https://github.com/FSU-4221C/fsu-4221c-26-lab-7b-flight-network-ivorho/blob/main/report.md" target="_blank" rel="noopener">report.md</a>
+      (the course repository is private to the class).</p>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
